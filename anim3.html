@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Animação Básica</title>
+    <style>
+      body{
+        width: 500px;
+        margin: auto;
+        text-align: center;
+      }
+    </style>
+    <script src="Sprite.js"></script>
+  </head>
+  <body>
+    <h1>Animação Básica</h1>
+    <div>Lugar para animação</div>
+    <canvas>
+    </canvas>
+    <script>
+    var antes = new Date();
+    var agora = new Date();
+    var dt = 0;
+    var fps = 0;
+    var eCanvas = document.getElementsByTagName("canvas")[0];
+    var ctx  = eCanvas.getContext("2d");
+    var  pc = new Sprite();
+    pc.x = 10;
+    pc.y = 50;
+    requestAnimationFrame(passo);
+    function passo(){
+      requestAnimationFrame(passo);
+      agora = new Date();
+      dt = (agora - antes)/1000;
+      ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
+      pc.x = pc.x + pc.vx*dt;
+      pc.y = pc.y + pc.vy*dt;
+      ctx.fillRect(pc.x, pc.y, 10, 10);
+      antes = agora;
+    }
+    addEventListener("keydown", teclaPressionada);
+    addEventListener("keyup", teclaSolta);
+    function teclaPressionada(evento){
+      console.log(evento.keyCode);
+      switch (evento.keyCode) {
+        case 37:
+          pc.vx = -pc.vm;
+          break;
+        case 39:
+          pc.vx = +pc.vm;
+          break;
+        case 38:
+          pc.vy = -pc.vm;
+          break;
+        case 40:
+          pc.vy = +pc.vm;
+          break;
+        default:
+          pc.vx = 0;
+          pc.vy = 0;
+      }
+    }
+    function teclaSolta(evento){
+      console.log(evento.keyCode);
+      switch (evento.keyCode) {
+        case 37:
+        case 39:
+          pc.vx = 0;
+        break;
+        case 38:
+        case 40:
+          pc.vy = 0;
+        break;
+      }
+    }
+    </script>
+  </body>
+</html>
