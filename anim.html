@@ -25,8 +25,9 @@
     var ctx  = eCanvas.getContext("2d"); //Recupera o contexto, neste caso, o 2d.
     var  x = 10;
     var vx = 30; //Velocidade de x
-    setInterval(passo, 1000/60);
+    requestAnimationFrame(passo); //O navegador vai chamar a função passo e atualizar um quadro de animação antes da próxima repintura.
     function passo(){
+      requestAnimationFrame(passo);
       agora = new Date();
       dt = (agora - antes)/1000; //Tempo que levou desde o início.
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height); /*limpa todos os pixels de um retângulo definido na posição (x, y) e largura, altura para uma cor preta transparente, apagando algum conteúdo anterior.*/
