@@ -17,22 +17,28 @@
     <canvas>
     </canvas>
     <script>
-    var p = 0;
     var antes = new Date(); //new Date() representa um único momento no tempo, que é o número de milisegundos desde 1 de Janeiro de 1970.
     var agora = new Date();
     var dt = 0;
     var fps = 0;
     var eCanvas = document.getElementsByTagName("canvas")[0];
     var ctx  = eCanvas.getContext("2d"); //Recupera o contexto, neste caso, o 2d.
-    setInterval(passo, 1000/30);
+    var  x = 10;
+    var vx = 30; //Velocidade de x
+    setInterval(passo, 1000/60);
     function passo(){
       agora = new Date();
-      dt = agora - antes; //Tempo que levou desde o início.
+      dt = (agora - antes)/1000; //Tempo que levou desde o início.
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height); /*limpa todos os pixels de um retângulo definido na posição (x, y) e largura, altura para uma cor preta transparente, apagando algum conteúdo anterior.*/
-      ctx.strokeText("fps: " + 1000/dt, 10, 20); /*Desenha o texto (sem preenchimento) na tela, a cor padrão do texto é preto. 
+      ctx.strokeText("fps: " + 1/dt, 10, 20); /*Desenha o texto (sem preenchimento) na tela, a cor padrão do texto é preto. 
         context.strokeText(text,x,y);  text: Especifica o texto que será escrito na tela, x: A coordenada x onde começar a pintar o texto (em relação à lona), 
         y: a coordenada y onde começar a pintar o texto (em relação à lona).*/
-      p++;
+      x = x + vx*dt;
+      ctx.fillRect(x, 50, 10, 10); /*desenha um retângulo preenchido na posição (x, y), no qual o tamanho é determinado pela width (largura) e pela height (altura), e cujo o estilo é determinado pelo atributo fillStyle.
+        x: O valor da coordenada x para o ponto inicial do retângulo.
+        y: O valor da coordenada y para o ponto inicial do retângulo.
+        width: A largura do retângulo.
+        height: A altura do retângulo.*/
       antes = agora;
     }
     </script>
