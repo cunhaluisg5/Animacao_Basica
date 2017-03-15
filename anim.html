@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Animação Básica</title>
+    <style>
+      body{
+        width: 500px;
+        margin: auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Animação Básica</h1>
+    <div>Lugar para animação</div>
+    <canvas>
+    </canvas>
+    <script>
+    var p = 0;
+    var antes = new Date(); //new Date() representa um único momento no tempo, que é o número de milisegundos desde 1 de Janeiro de 1970.
+    var agora = new Date();
+    var dt = 0;
+    var fps = 0;
+    var eCanvas = document.getElementsByTagName("canvas")[0];
+    var ctx  = eCanvas.getContext("2d"); //Recupera o contexto, neste caso, o 2d.
+    setInterval(passo, 1000/30);
+    function passo(){
+      agora = new Date();
+      dt = agora - antes; //Tempo que levou desde o início.
+      ctx.clearRect(0, 0, eCanvas.width, eCanvas.height); /*limpa todos os pixels de um retângulo definido na posição (x, y) e largura, altura para uma cor preta transparente, apagando algum conteúdo anterior.*/
+      ctx.strokeText("fps: " + 1000/dt, 10, 20); /*Desenha o texto (sem preenchimento) na tela, a cor padrão do texto é preto. 
+        context.strokeText(text,x,y);  text: Especifica o texto que será escrito na tela, x: A coordenada x onde começar a pintar o texto (em relação à lona), 
+        y: a coordenada y onde começar a pintar o texto (em relação à lona).*/
+      p++;
+      antes = agora;
+    }
+    </script>
+  </body>
+</html>
