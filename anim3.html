@@ -27,6 +27,11 @@
     var  pc = new Sprite();
     pc.x = 10;
     pc.y = 50;
+    pc.color = "blue";
+    var  npc = new Sprite();
+    npc.x = 200;
+    npc.y = 50;
+    npc.color = "red";
     requestAnimationFrame(passo);
     function passo(){
       requestAnimationFrame(passo);
@@ -34,7 +39,11 @@
       dt = (agora - antes)/1000;
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
+      npc.vx = (pc.x - npc.x);
+      npc.vy = (pc.y - npc.y);
       pc.mover(dt);
+      npc.mover(dt);
+      npc.desenhar(ctx);
       pc.desenhar(ctx);
       antes = agora;
     }

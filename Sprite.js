@@ -4,6 +4,7 @@ function Sprite(){
   this.vx = 0;
   this.vy = 0;
   this.vm = 150;
+  this.color = "black";
 
   this.mover = function(dt){
     this.x = this.x + this.vx*dt;
@@ -11,6 +12,7 @@ function Sprite(){
   }
 
   this.desenhar = function(ctx){
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, 10, 10);
   };
 }
