@@ -34,9 +34,8 @@
       dt = (agora - antes)/1000;
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
-      pc.x = pc.x + pc.vx*dt;
-      pc.y = pc.y + pc.vy*dt;
-      ctx.fillRect(pc.x, pc.y, 10, 10);
+      pc.mover(dt);
+      pc.desenhar(ctx);
       antes = agora;
     }
     addEventListener("keydown", teclaPressionada);
