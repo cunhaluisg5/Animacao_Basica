@@ -31,7 +31,7 @@
       agora = new Date();
       dt = (agora - antes)/1000; //Tempo que levou desde o início.
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height); /*limpa todos os pixels de um retângulo definido na posição (x, y) e largura, altura para uma cor preta transparente, apagando algum conteúdo anterior.*/
-      ctx.strokeText("fps: " + 1/dt, 10, 20); /*Desenha o texto (sem preenchimento) na tela, a cor padrão do texto é preto. 
+      ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20); /*Desenha o texto (sem preenchimento) na tela, a cor padrão do texto é preto. 
         context.strokeText(text,x,y);  text: Especifica o texto que será escrito na tela, x: A coordenada x onde começar a pintar o texto (em relação à lona), 
         y: a coordenada y onde começar a pintar o texto (em relação à lona).*/
       x = x + vx*dt;
