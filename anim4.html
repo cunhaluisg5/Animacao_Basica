@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Animação Básica</title>
+    <style>
+      body{
+        width: 500px;
+        margin: auto;
+        text-align: center;
+      }
+    </style>
+    <script src="Sprite.js"></script>
+    <script src="Level.js"></script>
+  </head>
+  <body>
+    <h1>Animação Básica</h1>
+    <div>Lugar para animação</div>
+    <canvas>
+    </canvas>
+    <script>
+    var antes = new Date();
+    var agora = new Date();
+    var dt = 0;
+    var fps = 0;
+    var eCanvas = document.getElementsByTagName("canvas")[0];
+    var ctx  = eCanvas.getContext("2d");
+
+    var level = new Level();
+    var  pc = new Sprite();
+    pc.x = 10;
+    pc.y = 50;
+    pc.color = "blue";
+    var  npc = new Sprite();
+    npc.x = 200;
+    npc.y = 50;
+    npc.color = "red";
+    requestAnimationFrame(passo);
+    function passo(){
+      requestAnimationFrame(passo);
+      agora = new Date();
+      dt = (agora - antes)/1000;
+      ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
+      npc.vx = (pc.x - npc.x);
+      npc.vy = (pc.y - npc.y);
+      pc.mover(dt);
+      npc.mover(dt);
+      npc.desenhar(ctx);
+      pc.desenhar(ctx);
+      level.desenhar(ctx);
+      antes = agora;
+    }
+    addEventListener("keydown", teclaPressionada);
+    addEventListener("keyup", teclaSolta);
+    function teclaPressionada(evento){
+      console.log(evento.keyCode);
+      switch (evento.keyCode) {
+        case 37:
+          pc.vx = -pc.vm;
+          break;
+        case 39:
+          pc.vx = +pc.vm;
+          break;
+        case 38:
+          pc.vy = -pc.vm;
+          break;
+        case 40:
+          pc.vy = +pc.vm;
+          break;
+        default:
+          pc.vx = 0;
+          pc.vy = 0;
+      }
+    }
+    function teclaSolta(evento){
+      console.log(evento.keyCode);
+      switch (evento.keyCode) {
+        case 37:
+        case 39:
+          pc.vx = 0;
+        break;
+        case 38:
+        case 40:
+          pc.vy = 0;
+        break;
+      }
+    }
+    </script>
+  </body>
+</html>
