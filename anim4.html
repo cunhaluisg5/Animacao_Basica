@@ -26,6 +26,8 @@
     var eCanvas = document.getElementsByTagName("canvas")[0];
     var ctx  = eCanvas.getContext("2d");
     var level = new Level();
+    level.maxEnemies = 3;
+    level.iniciar();
     var  pc = new Sprite();
     pc.x = 10;
     pc.y = 50;
@@ -37,9 +39,8 @@
       dt = (agora - antes)/1000;
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
-      //npc.vx = (pc.x - npc.x);
-      //npc.vy = (pc.y - npc.y);
       pc.mover(dt);
+      level.perseguir(pc);
       level.mover(dt);
       pc.desenhar(ctx);
       level.desenhar(ctx);
@@ -48,7 +49,6 @@
     addEventListener("keydown", teclaPressionada);
     addEventListener("keyup", teclaSolta);
     function teclaPressionada(evento){
-      console.log(evento.keyCode);
       switch (evento.keyCode) {
         case 37:
           pc.vx = -pc.vm;
@@ -68,7 +68,6 @@
       }
     }
     function teclaSolta(evento){
-      console.log(evento.keyCode);
       switch (evento.keyCode) {
         case 37:
         case 39:
