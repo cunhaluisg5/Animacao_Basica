@@ -31,6 +31,7 @@
     var  pc = new Sprite();
     pc.x = 10;
     pc.y = 50;
+    pc.vidas = 3;
     pc.color = "blue";
     requestAnimationFrame(passo);
     function passo(){
@@ -39,11 +40,13 @@
       dt = (agora - antes)/1000;
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
+      ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
       pc.mover(dt);
       level.perseguir(pc);
       level.mover(dt);
       pc.desenhar(ctx);
       level.desenhar(ctx);
+      level.testarColisao(pc);
       antes = agora;
     }
     addEventListener("keydown", teclaPressionada);
@@ -52,15 +55,19 @@
       switch (evento.keyCode) {
         case 37:
           pc.vx = -pc.vm;
+          evento.preventDefault();
           break;
         case 39:
           pc.vx = +pc.vm;
+          evento.preventDefault();
           break;
         case 38:
           pc.vy = -pc.vm;
+          evento.preventDefault();
           break;
         case 40:
           pc.vy = +pc.vm;
+          evento.preventDefault();
           break;
         default:
           pc.vx = 0;

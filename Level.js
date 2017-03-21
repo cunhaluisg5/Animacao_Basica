@@ -18,8 +18,8 @@ function Level(){
 
   this.perseguir = function(alvo){
     for (var i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].vx = (alvo.x - this.enemies[i].x);
-      this.enemies[i].vy = (alvo.y - this.enemies[i].y);
+      this.enemies[i].vx = (alvo.x - this.enemies[i].x)/2;
+      this.enemies[i].vy = (alvo.y - this.enemies[i].y)/2;
     }
   }
 
@@ -37,5 +37,19 @@ function Level(){
       novoInimigo.color = "red";
       this.enemies.push(novoInimigo);
     }
+  }
+
+  this.testarColisao = function(alvo){
+    for (var i = 0; i < this.enemies.length; i++) {
+      if(alvo.colidiuCom(this.enemies[i])){
+        this.enemies[i].color = "green";
+        alvo.vidas--;
+        this.enemies[i].x = 300-600*Math.random();
+        this.enemies[i].y = 100-200*Math.random();
+      } else {
+        this.enemies[i].color = "red";
+      }
+    }
+
   }
 }
