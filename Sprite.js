@@ -24,4 +24,15 @@ function Sprite(){
     return true;
 
   }
+
+  this.repelir = function(alvo){
+    var dx = this.x-alvo.x;
+    var dy = this.y-alvo.y;
+    var raio = Math.sqrt(
+      Math.pow(dx,2)+
+      Math.pow(dy,2)
+    );
+    this.vx += 120*dx/(raio*raio);
+    this.vy += 120*dy/(raio*raio);
+  }
 }
