@@ -31,6 +31,7 @@
     var  pc = new Sprite();
     pc.x = 10;
     pc.y = 50;
+    pc.dir = 1;
     pc.vidas = 3;
     pc.color = "blue";
     requestAnimationFrame(passo);
@@ -46,6 +47,7 @@
       level.mover(dt);
       pc.desenhar(ctx);
       level.desenhar(ctx);
+      level.testarColisaoTiros();
       level.testarColisao(pc);
       antes = agora;
     }
@@ -55,19 +57,26 @@
       switch (evento.keyCode) {
         case 37:
           pc.vx = -pc.vm;
+          pc.dir = 1;
           evento.preventDefault();
           break;
         case 39:
           pc.vx = +pc.vm;
+          pc.dir = 3;
           evento.preventDefault();
           break;
         case 38:
           pc.vy = -pc.vm;
+          pc.dir = 2;
           evento.preventDefault();
           break;
         case 40:
           pc.vy = +pc.vm;
+          pc.dir = 4;
           evento.preventDefault();
+          break;
+        case 32:
+          level.tiro(pc.x, pc.y, pc.dir);
           break;
         default:
           pc.vx = 0;

@@ -1,11 +1,15 @@
 function Level(){
   this.enemies = [];
+  this.tiros = [];
   this.number  = 1;
   this.maxEnemies  = 1;
 
   this.desenhar = function(ctx){
     for (var i = 0; i < this.enemies.length; i++) {
       this.enemies[i].desenhar(ctx);
+    }
+    for (var i = 0; i < this.tiros.length; i++) {
+      this.tiros[i].desenhar(ctx);
     }
 
     ctx.fillStyle = "yellow";
@@ -18,8 +22,10 @@ function Level(){
 
   this.perseguir = function(alvo){
     for (var i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].vx = this.enemies[i].vm*(alvo.x - this.enemies[i].x)/200;
-      this.enemies[i].vy = this.enemies[i].vm*(alvo.y - this.enemies[i].y)/200;
+      var dx = (alvo.x - this.enemies[i].x);
+      var dy = (alvo.y - this.enemies[i].y);
+      this.enemies[i].vx = this.enemies[i].vm*dx/200;
+      this.enemies[i].vy = this.enemies[i].vm*dy/200;
     }
   }
 
@@ -29,6 +35,9 @@ function Level(){
         this.enemies[i].repelir(this.enemies[j]);
       }
       this.enemies[i].mover(dt);
+    }
+    for (var i = 0; i < this.tiros.length; i++) {
+      this.tiros[i].mover(dt);
     }
   }
 
@@ -55,5 +64,52 @@ function Level(){
       }
     }
 
+  }
+
+  this.testarColisaoTiros = function(){
+    for (var i = 0; i < this.enemies.length; i++) {
+      for (var j = this.tiros.length-1; j>=0; j--) {
+        if(this.tiros[j].colidiuCom(this.enemies[i])){
+          this.enemies[i].color = "green";
+          this.enemies[i].x = 300-600*Math.random();
+          this.enemies[i].y = 100-200*Math.random();
+          this.tiros[j].x = -2000;
+          this.tiros[j].y = -2000;
+          this.tiros.splice(j,1);
+        } else {
+          this.enemies[i].color = "red";
+        }
+      }
+    }
+    for (var j =  this.tiros.length-1;j>=0; j--) {
+      if(
+        this.tiros[j].x > 1000 || this.tiros[j].x < -1000 ||
+        this.tiros[j].y > 1000 || this.tiros[j].y < -1000)
+        {
+          this.tiros.splice(j,1);
+        }
+    }
+  }
+
+  this.tiro = function(x, y, dir){
+      var tiro = new Sprite();
+      tiro.x = x;
+      tiro.y = y;
+      tiro.color = "gold";
+      switch (dir) {
+        case 1:
+          tiro.vx = -200;
+        break;
+        case 2:
+          tiro.vy = -200;
+        break;
+        case 3:
+          tiro.vx = +200;
+        break;
+        case 4:
+          tiro.vy = +200;
+        break;
+      }
+      this.tiros.push(tiro);
   }
 }
