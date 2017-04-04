@@ -32,6 +32,7 @@ function Sprite(){
       Math.pow(dx,2)+
       Math.pow(dy,2)
     );
+    if(raio>12) return;
     this.vx += 120*dx/(raio*raio);
     this.vy += 120*dy/(raio*raio);
   }
