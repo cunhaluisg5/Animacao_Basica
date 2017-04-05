@@ -22,10 +22,7 @@ function Level(){
 
   this.perseguir = function(alvo){
     for (var i = 0; i < this.enemies.length; i++) {
-      var dx = (alvo.x - this.enemies[i].x);
-      var dy = (alvo.y - this.enemies[i].y);
-      this.enemies[i].vx = this.enemies[i].vm*dx/200;
-      this.enemies[i].vy = this.enemies[i].vm*dy/200;
+      this.enemies[i].perseguir(alvo);
     }
   }
 
@@ -46,7 +43,8 @@ function Level(){
       var novoInimigo =  new Sprite();
       novoInimigo.x = 200 - 100*Math.random();
       novoInimigo.y =  50 + i*20 - 50*Math.random();
-      novoInimigo.vm = 70+80*Math.random();
+      novoInimigo.vm = 10+40*Math.random();
+      novoInimigo.width = novoInimigo.height = 10+10*Math.random();
       novoInimigo.color = "red";
       this.enemies.push(novoInimigo);
     }
@@ -96,6 +94,8 @@ function Level(){
       tiro.x = x;
       tiro.y = y;
       tiro.color = "gold";
+      tiro.width = 3;
+      tiro.height = 3;
       switch (dir) {
         case 1:
           tiro.vx = -200;

@@ -3,7 +3,9 @@ function Sprite(){
   this.y = 0;
   this.vx = 0;
   this.vy = 0;
-  this.vm = 150;
+  this.vm = 50;
+  this.width = 10;
+  this.height = 10;
   this.color = "black";
 
   this.mover = function(dt){
@@ -13,14 +15,16 @@ function Sprite(){
 
   this.desenhar = function(ctx){
     ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, 10, 10);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(this.x, this.y, this.width, this.height);
   };
 
   this.colidiuCom = function(alvo){
-    if(this.y+10 < alvo.y) return false;
-    if(this.y > alvo.y+10) return false;
-    if(this.x+10 < alvo.x) return false;
-    if(this.x > alvo.x+10) return false;
+    if(this.y+this.height < alvo.y) return false;
+    if(this.y > alvo.y+alvo.height) return false;
+    if(this.x+this.width < alvo.x) return false;
+    if(this.x > alvo.x+alvo.width) return false;
     return true;
 
   }
@@ -32,8 +36,18 @@ function Sprite(){
       Math.pow(dx,2)+
       Math.pow(dy,2)
     );
-    if(raio>12) return;
-    this.vx += 120*dx/(raio*raio);
-    this.vy += 120*dy/(raio*raio);
+    var dim = Math.max(this.width, this.height);
+    if(raio > dim) return;
+    this.vx += 20*dim*dx/(raio*raio);
+    this.vy += 20*dim*dy/(raio*raio);
+  }
+
+  this.perseguir = function (alvo) {
+    var dx = (alvo.x - this.x);
+    var dy = (alvo.y - this.y);
+    var dist = Math.sqrt(dx*dx+dy*dy);
+    this.vx = this.vm*dx/(dist);
+    this.vy = this.vm*dy/(dist);
+
   }
 }
