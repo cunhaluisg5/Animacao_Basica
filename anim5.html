@@ -34,9 +34,9 @@
     pc.dir = 1;
     pc.vidas = 3;
     pc.color = "blue";
-    requestAnimationFrame(passo);
+    var id = requestAnimationFrame(passo);
     function passo(){
-      requestAnimationFrame(passo);
+      id = requestAnimationFrame(passo);
       agora = new Date();
       dt = (agora - antes)/1000;
       ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
@@ -95,6 +95,13 @@
         case 38:
         case 40:
           pc.vm = 0;
+        break;
+        case 79:
+          antes = new Date();
+          id = requestAnimationFrame(passo);
+        break;
+        case 80:
+          cancelAnimationFrame(id);
         break;
       }
     }
