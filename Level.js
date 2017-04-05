@@ -37,12 +37,24 @@ function Level(){
       this.tiros[i].mover(dt);
     }
   }
+  this.moverAng = function(dt){
+    for (var i = 0; i < this.enemies.length; i++) {
+      for (var j = i+1; j < this.enemies.length; j++) {
+        this.enemies[i].repelir(this.enemies[j]);
+      }
+      this.enemies[i].moverAng(dt);
+    }
+    for (var i = 0; i < this.tiros.length; i++) {
+      this.tiros[i].moverAng(dt);
+    }
+  }
 
   this.iniciar = function(){
     for (var i = 0; i < this.maxEnemies; i++) {
       var novoInimigo =  new Sprite();
       novoInimigo.x = 200 - 100*Math.random();
       novoInimigo.y =  50 + i*20 - 50*Math.random();
+      novoInimigo.angle = 360*Math.random();
       novoInimigo.vm = 10+40*Math.random();
       novoInimigo.width = novoInimigo.height = 10+10*Math.random();
       novoInimigo.color = "red";
@@ -89,27 +101,15 @@ function Level(){
     }
   }
 
-  this.tiro = function(x, y, dir){
+  this.tiro = function(atirador){
       var tiro = new Sprite();
-      tiro.x = x;
-      tiro.y = y;
+      tiro.x = atirador.x;
+      tiro.y = atirador.y;
+      tiro.angle = atirador.angle;
+      tiro.vm = 200;
       tiro.color = "gold";
       tiro.width = 3;
       tiro.height = 3;
-      switch (dir) {
-        case 1:
-          tiro.vx = -200;
-        break;
-        case 2:
-          tiro.vy = -200;
-        break;
-        case 3:
-          tiro.vx = +200;
-        break;
-        case 4:
-          tiro.vy = +200;
-        break;
-      }
       this.tiros.push(tiro);
   }
 }

@@ -5,7 +5,7 @@ function Sprite(){
   this.vx = 0;
   this.vy = 0;
   this.vang = 0;
-  this.vm = 50;
+  this.vm = 0;
   this.width = 10;
   this.height = 10;
   this.color = "black";
@@ -15,14 +15,28 @@ function Sprite(){
     this.x = this.x + this.vx*dt;
     this.y = this.y + this.vy*dt;
   }
+  this.moverAng = function(dt){
+    this.angle = this.angle + this.vang*dt;
+    this.vx = this.vm*Math.cos(this.angle*Math.PI/180);
+    this.vy = this.vm*Math.sin(this.angle*Math.PI/180);
+    this.x = this.x + this.vx*dt;
+    this.y = this.y + this.vy*dt;
+  }
 
   this.desenhar = function(ctx){
     ctx.save();
     ctx.translate(this.x,this.y);
-    ctx.rotate(this.angle *Math.PI/180);
+    ctx.rotate((this.angle+90) *Math.PI/180);
     ctx.fillStyle = this.color;
-    ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
-    ctx.strokeStyle = "black";
+    //ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+    ctx.beginPath();
+    ctx.moveTo(0, -this.height/2);
+    ctx.lineTo(this.width/2, this.height/2);
+    ctx.lineTo(-this.width/2, this.height/2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.strokeStyle = "grey";
     ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
     ctx.restore();
   };
