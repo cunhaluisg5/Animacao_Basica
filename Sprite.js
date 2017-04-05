@@ -59,8 +59,8 @@ function Sprite(){
     );
     var dim = Math.max(this.width, this.height);
     if(raio > dim) return;
-    this.vx += 20*dim*dx/(raio*raio);
-    this.vy += 20*dim*dy/(raio*raio);
+    this.x += 20*dim*dx/(raio*raio)*dt;
+    this.y += 20*dim*dy/(raio*raio)*dt;
   }
 
   this.perseguir = function (alvo) {
@@ -69,6 +69,21 @@ function Sprite(){
     var dist = Math.sqrt(dx*dx+dy*dy);
     this.vx = this.vm*dx/(dist);
     this.vy = this.vm*dy/(dist);
-
+  }
+  this.perseguirAng = function(alvo){
+    var dX = alvo.x - this.x;
+    var dY = alvo.y - this.y;
+    var dist = Math.sqrt(dX*dX+dY*dY);
+    dX = dX/dist;
+    dY = dY/dist;
+    dA = Math.acos(dX);
+    var tX = Math.cos(this.angle*Math.PI/180);
+    var tY = Math.sin(this.angle*Math.PI/180);
+    var prod = dX*tX + dY*tY;
+    if(dA>this.angle){
+      this.vang = -180*(1 - prod);
+    } else {
+      this.vang = 180*(1 - prod);
+    }
   }
 }

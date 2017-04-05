@@ -25,6 +25,11 @@ function Level(){
       this.enemies[i].perseguir(alvo);
     }
   }
+  this.perseguirAng = function(alvo){
+    for (var i = 0; i < this.enemies.length; i++) {
+      this.enemies[i].perseguirAng(alvo);
+    }
+  }
 
   this.mover = function(dt){
     for (var i = 0; i < this.enemies.length; i++) {
@@ -55,7 +60,7 @@ function Level(){
       novoInimigo.x = 200 - 100*Math.random();
       novoInimigo.y =  50 + i*20 - 50*Math.random();
       novoInimigo.angle = 360*Math.random();
-      novoInimigo.vm = 10+40*Math.random();
+      novoInimigo.vm = 10+30*Math.random();
       novoInimigo.width = novoInimigo.height = 10+10*Math.random();
       novoInimigo.color = "red";
       this.enemies.push(novoInimigo);

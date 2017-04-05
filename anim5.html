@@ -43,10 +43,13 @@
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
       ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
       pc.moverAng(dt);
-      level.perseguir(pc);
+      level.perseguirAng(pc);
       level.moverAng(dt);
       pc.desenhar(ctx);
       level.desenhar(ctx);
+      //ctx.moveTo(pc.x, pc.y);
+      //ctx.lineTo(level.enemies[0].x, level.enemies[0].y);
+      //ctx.stroke();
       level.testarColisaoTiros();
       level.testarColisao(pc);
       antes = agora;
