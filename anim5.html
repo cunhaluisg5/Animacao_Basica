@@ -24,6 +24,8 @@
     var dt = 0;
     var fps = 0;
     var eCanvas = document.getElementsByTagName("canvas")[0];
+    eCanvas.width = 600;
+    eCanvas.height = 480;
     var ctx  = eCanvas.getContext("2d");
     var level = new Level();
     level.maxEnemies = 12;
@@ -39,7 +41,9 @@
       id = requestAnimationFrame(passo);
       agora = new Date();
       dt = (agora - antes)/1000;
-      ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      //ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      ctx.fillStyle = "tan";
+      ctx.fillRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
       ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
       pc.moverAng(dt);
