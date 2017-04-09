@@ -8,7 +8,7 @@ function Level(){
 
   this.desenhar = function(ctx){
     for (var i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].desenhar(ctx);
+      this.enemies[i].desenharImg(ctx);
     }
     for (var i = 0; i < this.tiros.length; i++) {
       this.tiros[i].desenhar(ctx);
@@ -79,16 +79,21 @@ function Level(){
       novoInimigo.y =  50 + i*20 - 50*Math.random();
       novoInimigo.angle = 360*Math.random();
       novoInimigo.vm = 10+30*Math.random();
-      novoInimigo.width = novoInimigo.height = 10+10*Math.random();
+      novoInimigo.width = novoInimigo.height = 40+10*Math.random();
+      novoInimigo.height = novoInimigo.width;
       novoInimigo.color = "red";
       this.enemies.push(novoInimigo);
+      novoInimigo.img = imgPC;
+      novoInimigo.clip = {x: 257, y: 215, w: 116, h:138};
     }
     for (var i = 0; i < this.maxObstaculos; i++) {
       var novoObstaculo =  new Sprite();
-      novoObstaculo.x = 300;
-      novoObstaculo.y = 30+i*50;
-      novoObstaculo.height = 30;
-      novoObstaculo.width = 30;
+      novoObstaculo.x = 300-300*Math.random();
+      novoObstaculo.y = 30+i*110;
+      novoObstaculo.height = 80;
+      novoObstaculo.width = 60;
+      novoObstaculo.angle = -90;
+      novoObstaculo.desenhar = desenharBarril;
       this.obstaculos.push(novoObstaculo);
     }
   }
@@ -143,4 +148,18 @@ function Level(){
       tiro.height = 3;
       this.tiros.push(tiro);
   }
+
+
+}
+
+
+function desenharBarril(ctx){
+  ctx.save();
+  ctx.translate(this.x,this.y);
+  ctx.rotate((this.angle+90) *Math.PI/180);
+
+  ctx.drawImage(imgBarril, -this.width/2, -this.height/2, this.width, this.height);
+  ctx.strokeStyle = "grey";
+  ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
+  ctx.restore();
 }
