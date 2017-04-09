@@ -57,7 +57,7 @@ function Sprite(){
       Math.pow(dx,2)+
       Math.pow(dy,2)
     );
-    var dim = Math.max(this.width, this.height);
+    var dim = Math.max(this.width, this.height, alvo.width, alvo.height);
     if(raio > dim) return;
     this.x += 20*dim*dx/(raio*raio)*dt;
     this.y += 20*dim*dy/(raio*raio)*dt;

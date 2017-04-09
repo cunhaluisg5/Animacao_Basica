@@ -1,8 +1,10 @@
 function Level(){
   this.enemies = [];
   this.tiros = [];
+  this.obstaculos = [];
   this.number  = 1;
   this.maxEnemies  = 1;
+  this.maxObstaculos  = 1;
 
   this.desenhar = function(ctx){
     for (var i = 0; i < this.enemies.length; i++) {
@@ -10,6 +12,9 @@ function Level(){
     }
     for (var i = 0; i < this.tiros.length; i++) {
       this.tiros[i].desenhar(ctx);
+    }
+    for (var i = 0; i < this.obstaculos.length; i++) {
+      this.obstaculos[i].desenhar(ctx);
     }
 
     ctx.fillStyle = "yellow";
@@ -36,6 +41,10 @@ function Level(){
       for (var j = i+1; j < this.enemies.length; j++) {
         this.enemies[i].repelir(this.enemies[j]);
       }
+      for (var j = 0; j < this.obstaculos.length; j++) {
+        this.enemies[i].repelir(this.obstaculos[j]);
+      }
+
       this.enemies[i].mover(dt);
     }
     for (var i = 0; i < this.tiros.length; i++) {
@@ -47,10 +56,19 @@ function Level(){
       for (var j = i+1; j < this.enemies.length; j++) {
         this.enemies[i].repelir(this.enemies[j]);
       }
+      for (var j = 0; j < this.obstaculos.length; j++) {
+        this.enemies[i].repelir(this.obstaculos[j]);
+      }
       this.enemies[i].moverAng(dt);
     }
     for (var i = 0; i < this.tiros.length; i++) {
       this.tiros[i].moverAng(dt);
+    }
+  }
+
+  this.repelirObstaculos = function(alvo){
+    for(var j =0; j< this.obstaculos.length; j++) {
+      alvo.repelir(this.obstaculos[j]);
     }
   }
 
@@ -64,6 +82,14 @@ function Level(){
       novoInimigo.width = novoInimigo.height = 10+10*Math.random();
       novoInimigo.color = "red";
       this.enemies.push(novoInimigo);
+    }
+    for (var i = 0; i < this.maxObstaculos; i++) {
+      var novoObstaculo =  new Sprite();
+      novoObstaculo.x = 300;
+      novoObstaculo.y = 30+i*50;
+      novoObstaculo.height = 30;
+      novoObstaculo.width = 30;
+      this.obstaculos.push(novoObstaculo);
     }
   }
 
