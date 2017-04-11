@@ -21,8 +21,8 @@ function Level(){
     ctx.strokeStyle = "black";
     ctx.font = "1em Arial Black";
     var texto = "Level: " + this.number + " Enemies: " +this.enemies.length;
-    ctx.fillText(texto, 100, 20);
-    ctx.strokeText(texto, 100, 20);
+    ctx.fillText(texto, 100, 20); //fillText () para desenhar texto preencher na tela. A cor do texto padrão é preto. 
+    ctx.strokeText(texto, 100, 20); //O strokeText() método desenha o texto (sem preenchimento) na tela. A cor padrão do texto é preto. 
   }
 
   this.perseguir = function(alvo){
@@ -75,14 +75,14 @@ function Level(){
   this.iniciar = function(){
     for (var i = 0; i < this.maxEnemies; i++) {
       var novoInimigo =  new Sprite();
-      novoInimigo.x = 200 - 100*Math.random();
+      novoInimigo.x = 200 - 100*Math.random(); //A função  Math.random() retorna um ponto de flutuação, números pseudo-aleatórios em uma variação [0, 1) ou seja, de 0 (inclusivo) até, mas não incluindo, 1 (exclusivo), que depois você pode dimensionar para a sua variação desejada.
       novoInimigo.y =  50 + i*20 - 50*Math.random();
       novoInimigo.angle = 360*Math.random();
       novoInimigo.vm = 10+30*Math.random();
       novoInimigo.width = novoInimigo.height = 40+10*Math.random();
       novoInimigo.height = novoInimigo.width;
       novoInimigo.color = "red";
-      this.enemies.push(novoInimigo);
+      this.enemies.push(novoInimigo); //O método push() adiciona um ou mais elementos ao final de um array e retorna o comprimento desse array.
       novoInimigo.img = imgPC;
       novoInimigo.clip = {x: 257, y: 215, w: 116, h:138};
     }
@@ -121,7 +121,7 @@ function Level(){
           this.enemies[i].y = 100-200*Math.random();
           this.tiros[j].x = -2000;
           this.tiros[j].y = -2000;
-          this.tiros.splice(j,1);
+          this.tiros.splice(j,1); //O método splice() altera o conteúdo de uma lista, adicionando novos elementos enquanto remove elementos antigos.
         } else {
           this.enemies[i].color = "red";
         }
