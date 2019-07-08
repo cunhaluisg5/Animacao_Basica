@@ -19,64 +19,81 @@
     <canvas>
     </canvas>
     <script>
+    var imgBarril = new Image();
+    imgBarril.src = "barrel.png";
+    var imgPC = new Image();
+    imgPC.src = "personagens.png";
     var antes = new Date();
     var agora = new Date();
     var dt = 0;
     var fps = 0;
     var eCanvas = document.getElementsByTagName("canvas")[0];
+    eCanvas.width = 600;
+    eCanvas.height = 480;
     var ctx  = eCanvas.getContext("2d");
     var level = new Level();
     level.maxEnemies = 12;
+    level.maxObstaculos = 5;
     level.iniciar();
     var  pc = new Sprite();
     pc.x = 10;
     pc.y = 50;
+    pc.width = 40;
+    pc.height = 80;
     pc.dir = 1;
     pc.vidas = 3;
     pc.color = "blue";
-    requestAnimationFrame(passo);
+    pc.img = imgPC;
+    pc.clip = {x: 282, y: 19, w: 91, h:158};
+    var id = requestAnimationFrame(passo);
     function passo(){
-      requestAnimationFrame(passo);
+      id = requestAnimationFrame(passo);
       agora = new Date();
       dt = (agora - antes)/1000;
-      ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      //ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+      ctx.fillStyle = "darkgrey";
+      ctx.fillRect(0, 0, eCanvas.width, eCanvas.height);
       ctx.strokeText("fps: " + Math.floor(1/dt), 10, 20);
       ctx.strokeText("Vidas: " + pc.vidas, 10, 40);
-      pc.mover(dt);
-      level.perseguir(pc);
-      level.mover(dt);
-      pc.desenhar(ctx);
+      level.repelirObstaculos(pc);
+      pc.moverAng(dt);
+      level.perseguirAng(pc);
+      level.moverAng(dt);
+      pc.desenharImg(ctx);
       level.desenhar(ctx);
+      //ctx.moveTo(pc.x, pc.y);
+      //ctx.lineTo(level.enemies[0].x, level.enemies[0].y);
+      //ctx.stroke();
       level.testarColisaoTiros();
       level.testarColisao(pc);
       antes = agora;
     }
-    addEventListener("keydown", teclaPressionada);
+    addEventListener("keydown", teclaPressionada); //addEventListener() registra uma única espera de evento em um único alvo. O alvo do evento pode ser um único elemento em um documento
     addEventListener("keyup", teclaSolta);
     function teclaPressionada(evento){
       switch (evento.keyCode) {
         case 37:
-          pc.vx = -pc.vm;
+          pc.vang = -360;
           pc.dir = 1;
-          evento.preventDefault();
+          evento.preventDefault(); //preventDefault() cancela o evento se for cancelável, sem parar a propagação do mesmo.
           break;
         case 39:
-          pc.vx = +pc.vm;
+          pc.vang = 360;
           pc.dir = 3;
           evento.preventDefault();
           break;
         case 38:
-          pc.vy = -pc.vm;
+          pc.vm = 60;
           pc.dir = 2;
           evento.preventDefault();
           break;
         case 40:
-          pc.vy = +pc.vm;
+          pc.vm = -60;
           pc.dir = 4;
           evento.preventDefault();
           break;
         case 32:
-          level.tiro(pc.x, pc.y, pc.dir);
+          level.tiro(pc);
           break;
         default:
           pc.vx = 0;
@@ -87,11 +104,18 @@
       switch (evento.keyCode) {
         case 37:
         case 39:
-          pc.vx = 0;
+          pc.vang = 0;
         break;
         case 38:
         case 40:
-          pc.vy = 0;
+          pc.vm = 0;
+        break;
+        case 79:
+          antes = new Date();
+          id = requestAnimationFrame(passo); /*requestAnimationFrame() fala para o navegador que deseja-se realizer uma animação e pede que o navegador chame uma função específica para atualizar um quadro de animação antes da próxima repaint (repintura). O método tem como argumento uma callback que deve ser invocado antes da repaint.*/
+        break;
+        case 80:
+          cancelAnimationFrame(id); //Cancela o requestAnimationFrame().
         break;
       }
     }
